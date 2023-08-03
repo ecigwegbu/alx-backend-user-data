@@ -42,10 +42,8 @@ def filter_datum(fields: List[str], redaction: str,
         redaction: str -- the string to replace the fields with
         message: str -- the log message
         """
-
     for field in fields:
-        out_text: str = "{}{}=[^;]*{}".format(separator, field, separator)
-        in_text: str = "{}{}={}{}".format(separator, field, redaction,
-                                          separator)
-        message = re.sub(out_text, in_text, message)
+        ouTx: str = "{}{}=[^;]*{}".format(separator, field, separator)
+        inTx: str = "{}{}={}{}".format(separator, field, redaction, separator)
+        message = re.sub(ouTx, inTx, message)
     return message
