@@ -23,9 +23,13 @@ class RedactingFormatter(logging.Formatter):
     SEPARATOR = ";"
 
     def __init__(self):
+        """Define the object using the provided arguments"""
+
         super(RedactingFormatter, self).__init__(self.FORMAT)
 
     def format(self, record: logging.LogRecord) -> str:
+
+        """Format the message and return a formatted version"""
         NotImplementedError
 
 
@@ -45,4 +49,3 @@ def filter_datum(fields: List[str], redaction: str,
                                           separator)
         message = re.sub(out_text, in_text, message)
     return message
-
