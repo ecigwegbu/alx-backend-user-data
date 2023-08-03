@@ -21,7 +21,7 @@ def filter_datum(fields: List[str], redaction: str,
     the substitution with a single regex."""
 
     for field in fields:
-        out_text = "{}{}=[^;]*{}".format(separator, field, separator)
+        out_text = "{}{}=[[:graph:]]*{}".format(separator, field, separator)
         in_text = "{}{}={}{}".format(separator, field, redaction, separator)
         message = re.sub(out_text, in_text, message)
     return message
