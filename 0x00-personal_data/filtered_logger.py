@@ -1,14 +1,7 @@
 #!/usr/bin/env python3
 """
     Main file - functions that manage PII.
-
-    Classes:
-        RedactionFormatter(logging.Formatter)
-    methods:
-        filter_datum(fields: List[str], redaction: str,
-                     message: str, separator: str) -> str:
 """
-
 import logging
 import re
 from typing import List
