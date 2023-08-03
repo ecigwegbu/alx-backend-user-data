@@ -23,9 +23,11 @@ class RedactingFormatter(logging.Formatter):
     SEPARATOR = ";"
 
     def __init__(self):
+        """Init the object."""
         super(RedactingFormatter, self).__init__(self.FORMAT)
 
     def format(self, record: logging.LogRecord) -> str:
+        """Define this method."""
         NotImplementedError
 
 
