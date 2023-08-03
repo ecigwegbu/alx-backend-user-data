@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-"""
-    Main file - functions that manage PII.
-"""
+""" Main file - functions that manage PII."""
 import logging
 import re
 from typing import List
