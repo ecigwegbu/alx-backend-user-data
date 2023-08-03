@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 """
 Main file - functions that manage PII.
+
+Classes:
+    RedactionFormatter(logging.Formatter)
+methods:
+    filter_datum(fields: List[str], redaction: str,
+                 message: str, separator: str) -> str:
 """
 
 import logging
@@ -28,9 +34,9 @@ def filter_datum(fields: List[str], redaction: str,
     """ Return an obfuscated log message.
 
         Keyword arguments:
-        fields -- a list of fields to obfusecate
-        redaction: -- the string to replace the fields with
-        message -- the log message
+        fields: List[str] -- a list of fields to obfusecate
+        redaction: str -- the string to replace the fields with
+        message: str -- the log message
         """
 
     for field in fields:
