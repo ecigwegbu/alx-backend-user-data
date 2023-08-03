@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""This module contains a function that obfucates a log message."""
+"""
+Main file - functions that manage PII.
+"""
 
 import logging
 import re
@@ -8,7 +10,7 @@ from typing import List
 
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
-    """
+        """
 
     REDACTION = "***"
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
@@ -23,17 +25,17 @@ class RedactingFormatter(logging.Formatter):
 
 def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
-    """
-    Return an obfuscated log message.
+    """ Return an obfuscated log message.
 
-    Keyword arguments:
-    fields -- a list of fields to obfusecate
-    redaction: -- the string to replace the fields with
-    message -- the log message
-    """
+        Keyword arguments:
+        fields -- a list of fields to obfusecate
+        redaction: -- the string to replace the fields with
+        message -- the log message
+        """
 
     for field in fields:
         out_text: str = "{}{}=[^;]*{}".format(separator, field, separator)
-        in_text: str = "{}{}={}{}".format(separator, field, redaction, separator)
+        in_text: str = "{}{}={}{}".format(separator, field, redaction,
+                                          separator)
         message = re.sub(out_text, in_text, message)
     return message
