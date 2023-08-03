@@ -1,0 +1,9 @@
+v0
+__pycache__
+*.bak
+*.bak*
+*.v*
+*.py.*
+venv
+.vscode
+node_modules
