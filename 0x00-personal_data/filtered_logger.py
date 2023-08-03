@@ -11,6 +11,7 @@
 
 import logging
 import re
+from typing import List
 
 
 class RedactingFormatter(logging.Formatter):
@@ -31,7 +32,7 @@ class RedactingFormatter(logging.Formatter):
         NotImplementedError
 
 
-def filter_datum(fields: list, redaction: str,
+def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
     """ Return an obfuscated log message.
 
