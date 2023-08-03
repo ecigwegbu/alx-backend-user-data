@@ -11,7 +11,7 @@
 
 import logging
 import re
-from typing import List, Union
+from typing import List
 
 
 class RedactingFormatter(logging.Formatter):
@@ -32,8 +32,8 @@ class RedactingFormatter(logging.Formatter):
         NotImplementedError
 
 
-def filter_datum(fields: List[str], redaction: str,
-                 message: str, separator: str) -> Union[str, None]:
+def filter_datum(fields: List, redaction: str,
+                 message: str, separator: str) -> str:
     """Return an obfuscated log message."""
     for field in fields:
         ouTx: str = "{}{}=[^;]*{}".format(separator, field, separator)
