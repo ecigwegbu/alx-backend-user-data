@@ -45,3 +45,4 @@ def filter_datum(fields: List[str], redaction: str,
                                           separator)
         message = re.sub(out_text, in_text, message)
     return message
+
