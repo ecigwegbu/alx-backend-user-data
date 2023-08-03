@@ -9,7 +9,7 @@ def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
     """Return an obfuscated log message."""
     for field in fields:
-        ouTx: str = "[{}]?{}=[^;]*{}".format(separator, field, separator)
-        inTx: str = "{}{}={}{}".format(separator, field, redaction, separator)
+        ouTx: str = "{}=[^{}]*".format(field, separator)
+        inTx: str = "{}={}".format(field, redaction)
         message = re.sub(ouTx, inTx, message)
     return message
