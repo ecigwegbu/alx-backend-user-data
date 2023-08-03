@@ -11,7 +11,6 @@
 
 import logging
 import re
-from typing import List
 
 
 class RedactingFormatter(logging.Formatter):
@@ -28,12 +27,11 @@ class RedactingFormatter(logging.Formatter):
         super(RedactingFormatter, self).__init__(self.FORMAT)
 
     def format(self, record: logging.LogRecord) -> str:
-
         """Format the message and return a formatted version"""
         NotImplementedError
 
 
-def filter_datum(fields: List[str], redaction: str,
+def filter_datum(fields: list, redaction: str,
                  message: str, separator: str) -> str:
     """ Return an obfuscated log message.
 
