@@ -43,7 +43,7 @@ def filter_datum(fields: List[str], redaction: str,
         """
 
     for field in fields:
-        ouTx: str = "{}=[^{}]*".format(field, separator)
+        ouTx: str = r"{}=[^{}]*".format(field, separator)
         inTx: str = "{}={}".format(field, redaction)
         message = re.sub(ouTx, inTx, message)
     return message
