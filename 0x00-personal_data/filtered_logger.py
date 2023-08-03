@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Main file - functions that manage PII.
+    Main file - functions that manage PII.
 
-Classes:
-    RedactionFormatter(logging.Formatter)
-methods:
-    filter_datum(fields: List[str], redaction: str,
-                 message: str, separator: str) -> str:
-"""
+    Classes:
+        RedactionFormatter(logging.Formatter)
+    methods:
+        filter_datum(fields: List[str], redaction: str,
+                     message: str, separator: str) -> str:
+    """
 
 import logging
 import re
