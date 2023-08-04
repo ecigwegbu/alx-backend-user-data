@@ -1,0 +1,12 @@
+INFO:ubuntu:Hello there
+INFO:ubuntu:Hello there again
+INFO:__main__:Hello there again
+INFO:__main__:Hello there again
+DEBUG:__main__:Hello there again
+DEBUG:__main__:Hello there again
+DEBUG:__main__:Hello there again???
+DEBUG:__main__:Hello there again??? No
+DEBUG:Hi:Hello there again??? No
+WARNING:warner:You are warned!
+INFO:__main__:Hello, World!
+DEBUG:__main__:Hello, World Again!

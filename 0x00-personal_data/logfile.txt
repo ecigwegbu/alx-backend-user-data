@@ -1,0 +1,10 @@
+INFO:root:Hello, World!
+INFO:root:Hello, World Again!
+INFO:my_logger:Hello, World!
+INFO:my_logger:Hello, World Again!
+INFO:my_logger:Hello, World!
+INFO:my_logger:Hello, World Again!
+INFO:__main__:Hello, World!
+INFO:__main__:Hello, World Again!
+INFO:__main__:Hello, World!
+INFO:__main__:Hello, World Again!
