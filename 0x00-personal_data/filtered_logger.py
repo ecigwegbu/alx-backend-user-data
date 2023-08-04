@@ -18,7 +18,7 @@ PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 """Personally Identifiable Information for users"""
 
 
-def filter_datum(fields: List[str]),  redaction: str,
+def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
     """ Return an obfuscated log message.
 
