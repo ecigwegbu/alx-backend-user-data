@@ -12,6 +12,9 @@
 import logging
 import re
 from typing import List
+import mysql.connector
+from mysql.connector.connection import MySQLConnection
+import os
 
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
@@ -63,11 +66,30 @@ def get_logger() -> logging.Logger:
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
     logger.propagate = False
-    formatter = RedactingFormatter(PII_FIELDS)
+    formatter = RedactingFormatter(list(PII_FIELDS))
     stream_handler = logging.StreamHandler()
     stream_handler.setFormatter(formatter)
     logger.addHandler(stream_handler)
     return logger
+
+
+def get_db() -> MySQLConnection:
+    """Return a connection to a dbase based on os environmental variables"""
+
+    host = os.getenv('PERSONAL_DATA_DB_HOST')
+    db = os.getenv('PERSONAL_DATA_DB_NAME')
+    username = os.getenv('PERSONAL_DATA_DB_USERNAME')
+    password = os.getenv('PERSONAL_DATA_DB_PASSWORD')
+
+    kwargs = {
+        'user': username,
+        'password': password,
+        'host': host,
+        'database': db
+    }
+    connector = mysql.connector.connect(**kwargs)
+
+    return connector
 
 
 if __name__ == "__main__":
