@@ -18,7 +18,7 @@ PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 """Personally Identifiable Information for users"""
 
 
-def filter_datum(fields: Sequence[str], redaction: str,
+def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
     """ Return an obfuscated log message.
 
@@ -43,7 +43,7 @@ class RedactingFormatter(logging.Formatter):
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
     SEPARATOR = ";"
 
-    def __init__(self, fields: List[str]):
+    def __init__(self, fields: Sequence[str]):
         """Define the object using the provided arguments."""
 
         super(RedactingFormatter, self).__init__(self.FORMAT)
