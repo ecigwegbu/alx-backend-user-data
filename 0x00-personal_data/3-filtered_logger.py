@@ -88,15 +88,8 @@ def get_db() -> MySQLConnection:
         'database': db
     }
     connector = mysql.connector.connect(**kwargs)
+
     return connector
-
-
-def main() -> None:
-    """
-    Obtain a database conn and retrieve all rows in the users table,
-    and display each row under a filtered format as per example.
-    """
-    pass
 
 
 if __name__ == "__main__":
