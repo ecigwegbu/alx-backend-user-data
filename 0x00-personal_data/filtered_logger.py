@@ -96,7 +96,19 @@ def main() -> None:
     Obtain a database conn and retrieve all rows in the users table,
     and display each row under a filtered format as per example.
     """
+
     conn = get_db()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * from users")
+    rows = cursor.fetchall()
+    logger = get_logger()
+    for row in rows:
+        user_string = ""
+        for field, value in row.items():
+            user_string = "{}{}={};".format(user_string, field, value)
+        logger.info(user_string)
+    cursor.close()
+    conn.close()
 
 
 if __name__ == "__main__":
