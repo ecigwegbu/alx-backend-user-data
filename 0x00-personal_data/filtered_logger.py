@@ -96,8 +96,8 @@ def main() -> None:
     Obtain a database conn and retrieve all rows in the users table,
     and display each row under a filtered format as per example.
     """
-    pass
+    conn = get_db()
 
 
 if __name__ == "__main__":
-    pass
+    main()
