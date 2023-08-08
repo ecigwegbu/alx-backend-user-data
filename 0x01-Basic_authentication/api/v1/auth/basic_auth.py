@@ -3,7 +3,7 @@
 """
 from api.v1.auth.auth import Auth
 from base64 import b64decode
-from typing import Union
+from typing import Union, TypeVar
 
 
 class BasicAuth(Auth):
@@ -37,7 +37,7 @@ class BasicAuth(Auth):
         return result
 
     def extract_user_credentials(self, decoded_base64_authorization_header:
-                                 str) -> (str, str):
+                                 str) -> Union[(str, str), (None, None)]:
         """ Return the user email and passwd from the Base64 decoded value
         """
         (email, password) = (None, None)
@@ -47,3 +47,9 @@ class BasicAuth(Auth):
             (email, password) = decoded_base64_authorization_header.split(
                                 sep=":", maxsplit=1)
             return (email, password)
+
+    def user_object_from_credentials(self, user_email: str, user_pwd: str) \
+            -> TypeVar('User'):
+        """ returns the User instance based on his email and password
+        """
+        pass
