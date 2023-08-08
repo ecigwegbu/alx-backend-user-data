@@ -42,6 +42,13 @@ def forbidden(error) -> str:
     return jsonify({"error": "Forbidden"}), 403
 
 
+@app.before_request
+def bf_request() -> Union[str, None]:
+    """ Before every request - handler
+    """
+    pass
+
+
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
     port = getenv("API_PORT", "5000")
