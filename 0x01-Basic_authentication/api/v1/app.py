@@ -42,22 +42,6 @@ def forbidden(error) -> str:
     return jsonify({"error": "Forbidden"}), 403
 
 
-@app.before_request
-def bf_request() -> Union[str, None]:
-    """ Before every request - handler
-    """
-    excluded_paths = ['/api/v1/status/', '/api/v1/unauthorized/',
-                      '/api/v1/forbidden/']
-    if not((auth is None) or
-           (request.path not in excluded_paths and
-            request.path + "/" not in excluded_paths)):
-        pass
-    elif auth.authorization_header(request) is None:
-        abort(401)
-    elif auth.current_user(request) is None:
-        abort(403)
-
-
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
     port = getenv("API_PORT", "5000")
