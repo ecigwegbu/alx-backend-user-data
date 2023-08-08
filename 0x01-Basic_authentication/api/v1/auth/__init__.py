@@ -2,7 +2,7 @@
 """ Auth Class - Basic Authentication
 """
 from flask import request
-from typing import List, Dict, Any, Union, Sequence, Mapping
+from typing import List, Union, TypeVar
 
 
 class Auth():
@@ -15,12 +15,12 @@ class Auth():
         """
         return False
 
-    def authorization_header(self, request=None) -> str:
+    def authorization_header(self, request=None) -> Union[str, None]:
         """Return None - None - request will be the Flask request object
         """
         return None
 
-    def current_user(self, request=None) -> TypeVar('User'):
+    def current_user(self, request=None) -> Union[TypeVar('User'), None]:
         """Return None - None - request will be the Flask request object
         """
         return None
