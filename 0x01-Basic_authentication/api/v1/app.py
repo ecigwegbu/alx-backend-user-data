@@ -12,6 +12,12 @@ import os
 app = Flask(__name__)
 app.register_blueprint(app_views)
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
+auth = None
+
+
+if getenv('AUTH_TYPE') == 'auth':
+    from api.v1.auth.auth import Auth
+    auth = Auth()
 
 
 @app.errorhandler(404)
@@ -35,7 +41,32 @@ def forbidden(error) -> str:
     return jsonify({"error": "Forbidden"}), 403
 
 
+@app.before_request
+def bf_request() -> str:
+    """ Before every request - handler
+    """
+    # print(f"----___---__---Before Request: Path: {request.path}")
+    # print(f"Require Auth? {auth.require_auth(request.path, ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/'])}")
+    # print(f"**********auth: {auth}")
+    # print("req is none:", request is None, "\nauth.header:", request.headers)
+    # print("auth.authorization_header(request):", auth.authorization_header(request))
+    # print("auth.current_user(request):", auth.current_user(request))
+    excluded_paths = ['/api/v1/status/', '/api/v1/unauthorized/',
+                      '/api/v1/forbidden/']
+    if not((auth is None) or \
+        (request.path not in excluded_paths and
+         request.path + "/" not in excluded_paths)):
+        # print("oOOopppp   IIIIIIIIIIIII   here1")
+        pass
+    elif auth.authorization_header(request) is None:
+        # print("oOOopppp   IIIIIIIIIIIII   here2")
+        abort(401)
+    elif auth.current_user(request) is None:
+        # print("oOOopppp   IIIIIIIIIIIII   here3")
+        abort(403)
+
+
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
     port = getenv("API_PORT", "5000")
-    app.run(host=host, port=port)
+    app.run(host=host, port=port, debug=True)
