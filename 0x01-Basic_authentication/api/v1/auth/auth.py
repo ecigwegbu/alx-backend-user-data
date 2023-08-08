@@ -14,9 +14,7 @@ class Auth():
         """Return False - path and excluded_paths will be used later
         now, you don’t need to take care of them.
         """
-        # if path and excluded_paths and (path in excluded_paths or
-        #                                 (path + "/") in excluded_paths):
-        if path and excluded_paths and path_matches(path, excluded_paths):
+        if path and excluded_paths and self.path_matches(path, excluded_paths):
             return False
         return True
 
@@ -32,7 +30,7 @@ class Auth():
         """
         return None
 
-    def path_matches(path: str, patterns: List[str]) -> bool:
+    def path_matches(self, path: str, patterns: List[str]) -> bool:
         """match pathname against a pattern
         """
         for pattern in patterns:
