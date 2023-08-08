@@ -13,7 +13,6 @@ class Auth():
         """Return False - path and excluded_paths will be used later
         now, you don’t need to take care of them.
         """
-        # if excluded_paths and (path in excluded_paths or
         if path and excluded_paths and (path in excluded_paths or
                                         (path + "/") in excluded_paths):
             return False
@@ -22,7 +21,9 @@ class Auth():
     def authorization_header(self, request=None) -> Union[str, None]:
         """Return None - None - request will be the Flask request object
         """
-        return None
+        if request is None:
+            return None
+        return request.headers.get("Authorization")
 
     def current_user(self, request=None) -> Union[TypeVar('User'), None]:
         """Return None - None - request will be the Flask request object
