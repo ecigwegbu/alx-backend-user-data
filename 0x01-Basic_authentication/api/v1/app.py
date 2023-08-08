@@ -46,28 +46,15 @@ def forbidden(error) -> str:
 def bf_request() -> Union[str, None]:
     """ Before every request - handler
     """
-    # print(f"----___---__---Before Request: Path: {request.path}")
-    # print(f"Require Auth? {auth.require_auth(request.path, ['/api
-    # /v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
-    # )}")
-    # print(f"**********auth: {auth}")
-    # print("req is none:", request is None, "\nauth.header:",
-    # request.headers)
-    # print("auth.authorization_header(request):",
-    # auth.authorization_header(request))
-    # print("auth.current_user(request):", auth.current_user(request))
     excluded_paths = ['/api/v1/status/', '/api/v1/unauthorized/',
                       '/api/v1/forbidden/']
     if not((auth is None) or
            (request.path not in excluded_paths and
             request.path + "/" not in excluded_paths)):
-        # print("oOOopppp   IIIIIIIIIIIII   here1")
         pass
     elif auth.authorization_header(request) is None:
-        # print("oOOopppp   IIIIIIIIIIIII   here2")
         abort(401)
     elif auth.current_user(request) is None:
-        # print("oOOopppp   IIIIIIIIIIIII   here3")
         abort(403)
 
 
