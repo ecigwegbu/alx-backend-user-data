@@ -32,6 +32,6 @@ class BasicAuth(Auth):
                 type(base64_authorization_header) == str:
             try:
                 result = b64decode(base64_authorization_header).decode('utf-8')
-            except UnicodeDecodeError:
+            except Exception:
                 result = None
         return result
