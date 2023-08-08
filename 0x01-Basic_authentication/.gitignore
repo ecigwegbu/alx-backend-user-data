@@ -9,7 +9,6 @@ temp*
 **/.vscode/
 *.js.*
 *.bak.*
-*.py
 v0
 **/venv/
 **/__pycache__/
