@@ -49,11 +49,6 @@ class BasicAuth(Auth):
             return (email, password)
         return None, None
 
-    def current_user(self, request=None) -> Union[TypeVar('User'), None]:
-        """Return None - None - request will be the Flask request object
-        """
-        return None
-
     def user_object_from_credentials(self, user_email: str, user_pwd: str) \
             -> TypeVar('User'):
         """ Return the Usr Instance based on his Email and Pasword
@@ -65,15 +60,22 @@ class BasicAuth(Auth):
             return None
         users = User.search({'email': user_email})
         if users:
-            # print("--GGHH-----users[0] type: ", type(users[0]))
-            # print("-------users type: ", type(users))
             try:  # in cases of multiple password entries per email
-                # print("Here - checking password!")
                 if users[0].is_valid_password(user_pwd):
-                    # print("Here - valid password!")
                     return users[0]
-            except Exception as e:
-                # print("Exception: ", e)
-                # print("Here -!!!! invalid password!")
+            except Exception:
                 pass
         return None
+
+    def current_user(self, request=None) -> Union[TypeVar('User'), None]:
+        """Return None - None - request will be the Flask request object
+        """
+        try:
+            auth_header = self.authorization_header(request)
+            base64_header = extract_base64_authorization_header(auth_header)
+            decoded_header = decode_base64_authorization_header(base64_header)
+            user_email, user_pwd = extract_user_credentials(decoded_header)
+            user = user_object_from_credentials(user_email, user_pwd)
+        except Exception:
+            return None
+        return user
