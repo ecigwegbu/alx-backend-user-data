@@ -66,7 +66,7 @@ class BasicAuth(Auth):
                         # print("\n********PASSWORD VALIDATED*************\n")
                         return user
                 except Exception:
-                    pass
+                    return None
         return None
 
     def current_user(self, request=None) -> Union[TypeVar('User'), None]:
