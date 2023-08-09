@@ -58,15 +58,22 @@ class BasicAuth(Auth):
             -> TypeVar('User'):
         """ Return the Usr Instance based on his Email and Pasword
         """
-        if (not user_email) or type(user_email) != str or \
-                (not user_pwd) or type(user_pwd) != str:
+        if (user_email is None) or (type(user_email) != str) or \
+                (user_pwd is None) or (type(user_pwd) != str):
+            return None
+        if User.count() == 0:
             return None
         users = User.search({'email': user_email})
         if users:
-            for user in users:
-                try:  # in cases of multiple password entries per email
-                    if user.is_valid_password(user_pwd):
-                        return user
-                except Exception:
-                    pass
+            # print("--GGHH-----users[0] type: ", type(users[0]))
+            # print("-------users type: ", type(users))
+            try:  # in cases of multiple password entries per email
+                # print("Here - checking password!")
+                if users[0].is_valid_password(user_pwd):
+                    # print("Here - valid password!")
+                    return users[0]
+            except Exception as e:
+                # print("Exception: ", e)
+                # print("Here -!!!! invalid password!")
+                pass
         return None
