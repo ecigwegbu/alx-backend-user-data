@@ -48,6 +48,11 @@ class BasicAuth(Auth):
             return (email, password)
         return None, None
 
+    def current_user(self, request=None) -> Union[TypeVar('User'), None]:
+        """Return None - None - request will be the Flask request object
+        """
+        return None
+
     def user_object_from_credentials(self, user_email: str, user_pwd: str) \
             -> TypeVar('User'):
         """ returns the User instance based on his email and password
