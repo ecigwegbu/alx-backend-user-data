@@ -1,0 +1,13 @@
+    def user_object_from_credentials(self, user_email: str, user_pwd: str) \
+            -> TypeVar('User'):
+        """ returns the User instance based on his email and password
+        """
+        user_object = None
+        if User.count() and \
+                (user_email and user_pwd) and \
+                type(user_email) == str and type(user_pwd) == str:
+            user = User.search({'email': user_email})
+            print("User type:", type(user), "Match length: ", len(user))
+            if user and user[0].is_valid_password(user_pwd):
+                user_object = user[0]
+        return user_object
