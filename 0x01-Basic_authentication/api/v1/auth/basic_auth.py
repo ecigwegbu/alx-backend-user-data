@@ -53,24 +53,18 @@ class BasicAuth(Auth):
             -> TypeVar('User'):
         """ Return the Usr Instance based on his Email and Pasword
         """
-        if (user_email is None) or (type(user_email) != str) or \
-                (user_pwd is None) or (type(user_pwd) != str):
+        if (not user_email) or (type(user_email) != str) or \
+                (not user_pwd) or (type(user_pwd) != str):
             return None
-        # if User.count() == 0:
-        #    return None
+        if User.count() == 0:
+            return None
         users = User.search({'email': user_email})
-        if users == [] or users is None:
-            return None
         if users:
-            for user in users:
-                if user is None:
-                    return None
-                try:  # in cases of multiple password entries per email
-                    if user.is_valid_password(user_pwd):
-                        # print("\n********PASSWORD VALIDATED*************\n")
-                        return user
-                except Exception:
-                    return None
+            try:  # in cases of multiple password entries per email
+                if users[0].is_valid_password(user_pwd):
+                    return users[0]
+            except Exception:
+                pass
         return None
 
     def current_user(self, request=None) -> Union[TypeVar('User'), None]:
