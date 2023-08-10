@@ -73,11 +73,14 @@ class BasicAuth(Auth):
         try:
             auth_header = self.authorization_header(request)
             # print("auth_header:", auth_header)
-            base64_header = self.extract_base64_authorization_header(auth_header)
+            base64_header = \
+                self.extract_base64_authorization_header(auth_header)
             # print("base64_header:", base64_header)
-            decoded_header = self.decode_base64_authorization_header(base64_header)
+            decoded_header = \
+                self.decode_base64_authorization_header(base64_header)
             # print("decoded_header:", decoded_header)
-            user_email, user_pwd = self.extract_user_credentials(decoded_header)
+            user_email, user_pwd = \
+                self.extract_user_credentials(decoded_header)
             # print("email, password:", user_email, user_pwd)
             user = self.user_object_from_credentials(user_email, user_pwd)
             # print("user:", user)
