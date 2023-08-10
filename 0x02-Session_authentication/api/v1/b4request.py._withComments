@@ -1,0 +1,25 @@
+@app.before_request
+def bf_request() -> Union[str, None]:
+    """ Before every request - handler
+    """
+    # print("\n--1-Request path:\n", request.path,"\n----\n")  # debug
+    excluded_paths = ['/api/v1/status/', '/api/v1/unauthorized/',
+                      '/api/v1/forbidden/']
+    print(f"--BEGIN--->> >> B4 request.")
+    print(f"request.path: {request.path}; excluded_paths: {excluded_paths}")
+    print(f"-- - - path in excl paths? {request.path in excluded_paths or request.path + '/' in excluded_paths}")
+    if (auth is not None) and \
+            auth.require_auth(request.path, excluded_paths):
+        print("xxxxx !!!! Requires Auth: ", auth.require_auth(request.path,
+                                                        excluded_paths))
+        if auth.authorization_header(request) is None:
+            print(f"-->> >> B4 request. auth header is {auth.authorization_header(request)}")
+            abort(401)  # unauthorized
+        print(f"HHHHH  HHHH Processing ... Requires Auth ....")
+        print(f"KKKK kkkk kKKKK  auth.current_user_email: {auth.current_user(request).email}")
+        print(f"KKKK kkkk kKKKK  auth.current_user_password: {auth.current_user(request).password}")
+        if auth.current_user(request) is None:
+            print(f"--403  auth.current_user(request) {auth.current_user(request)}")
+            # print("\n*****Here******0\n")
+            abort(403)  # authorized but forbidden
+        request.current_user = auth.current_user(request)

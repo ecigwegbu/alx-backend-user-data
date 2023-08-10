@@ -25,20 +25,20 @@ def view_one_user(user_id: str = None) -> str:
       - User object JSON represented
       - 404 if the User ID doesn't exist
     """
-    # print(f"\n---->>> user_id: {user_id}, request.current_user: {request.current_user}")
-    # print(f"\n DD-DD-DD  request.current_user_email: {request.current_user.email}")
-    # print(f"\nDD-D--D-  request.current_user_password: {request.current_user.password}\n")
+    print(f"\n---->>> user_id: {user_id}, request.current_user: {request.current_user}")
+    print(f"\n DD-DD-DD  request.current_user_email: {request.current_user.email}")
+    print(f"\nDD-D--D-  request.current_user_password: {request.current_user.password}\n")
     if user_id is None or \
             (user_id == 'me' and request.current_user is None):
         abort(404)
-    # print(f"=====user_id me?: {user_id}; request.current_user: {request.current_user}")
+    print(f"=====user_id me?: {user_id}; request.current_user: {request.current_user}")
     if user_id == 'me' and request.current_user is not None:
-        # print(f"\n   ggg   gggg User found?!!!")
+        print(f"\n   ggg   gggg User found?!!!")
         user = request.current_user
     else:
         user = User.get(user_id)
         if user is None:
-            # print(f"*************USER NONE in route***********!!!!")
+            print(f"*************USER NONE in route***********!!!!")
             abort(404)
     return jsonify(user.to_json())
 

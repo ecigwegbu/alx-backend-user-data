@@ -8,7 +8,8 @@ if __name__ == "__main__":
     user_clear_pwd = "pwd"
    
     basic_clear = "{}:{}".format(user_email, user_clear_pwd)
-    r = requests.get('http://0.0.0.0:5000/api/v1/status', headers={ 'Authorization': "Basic {}".format(base64.b64encode(basic_clear.encode('utf-8')).decode("utf-8")) })
+    r = requests.get('http://0.0.0.0:5000/api/v1/users', headers={ 'Authorization': "Basic {}".format(base64.b64encode(basic_clear.encode('utf-8')).decode("utf-8")) })
+    print("response: ", r.__dict__['_content'])
     print("response: ", r.json())
     print("r.headers: ", r.headers)
     if r.status_code != 200:
