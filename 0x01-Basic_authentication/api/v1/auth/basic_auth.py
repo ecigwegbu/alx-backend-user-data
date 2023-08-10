@@ -59,8 +59,12 @@ class BasicAuth(Auth):
         # if User.count() == 0:
         #    return None
         users = User.search({'email': user_email})
+        if users == [] or users is None:
+            return None
         if users:
             for user in users:
+                if user is None:
+                    return None
                 try:  # in cases of multiple password entries per email
                     if user.is_valid_password(user_pwd):
                         # print("\n********PASSWORD VALIDATED*************\n")
