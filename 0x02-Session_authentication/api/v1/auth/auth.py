@@ -15,12 +15,19 @@ class Auth():
         """Return False - path and excluded_paths will be used later
         now, you don’t need to take care of them.
         """
-        if path and excluded_paths and self.path_matches(path, excluded_paths):
+        def _path_matches(path: str, patterns: List[str]) -> bool:
+            """match pathname against a pattern
+            """
+            for pattern in patterns:
+                if fnmatch(path, pattern) or fnmatch(path + "/", pattern):
+                    return True
+            return False
+        if path and excluded_paths and _path_matches(path, excluded_paths):
             return False
         return True
 
     def authorization_header(self, request=None) -> Union[str, None]:
-        """Return None - None - request will be the Flask request object
+        """Return the Authorization header for a given request
         """
         if request is None:
             return None
@@ -30,14 +37,6 @@ class Auth():
         """Return None - None - request will be the Flask request object
         """
         return None
-
-    def path_matches(self, path: str, patterns: List[str]) -> bool:
-        """match pathname against a pattern
-        """
-        for pattern in patterns:
-            if fnmatch(path, pattern) or fnmatch(path + "/", pattern):
-                return True
-        return False
 
     def session_cookie(self, request=None):
         """Return a cookie value from a request
