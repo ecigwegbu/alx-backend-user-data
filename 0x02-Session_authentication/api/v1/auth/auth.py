@@ -49,5 +49,3 @@ class Auth():
         # print(f"\n--------- dict request: {request.__dict__}")
         cookie = request.cookies.get(cookie_name)
         return cookie
-        
-
