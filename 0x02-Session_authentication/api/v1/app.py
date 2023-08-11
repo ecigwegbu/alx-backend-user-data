@@ -54,7 +54,7 @@ def bf_request() -> Union[str, None]:
     """
     # print("\n--1-Request path:\n", request.path,"\n----\n")  # debug
     excluded_paths = ['/api/v1/status/', '/api/v1/unauthorized/',
-                      '/api/v1/forbidden/']
+                      '/api/v1/forbidden/', '/api/v1/auth_session/login/']
     # print(f"--BEGIN--->> >> B4 request.")
     # print(f"request.path: {request.path}; excluded_paths: {excluded_paths}")
     # print(f"-- - - path in excl paths? {request.path in excluded_paths or
@@ -63,7 +63,8 @@ def bf_request() -> Union[str, None]:
             auth.require_auth(request.path, excluded_paths):
         # print("xxxxx !!!! Requires Auth: ", auth.require_auth(request.path,
         #                                                 excluded_paths))
-        if auth.authorization_header(request) is None:
+        if auth.authorization_header(request) is None \
+                and auth.session_cookie(request) is None:
             # print(f"-->> >> B4 request. auth header is {auth.authorization
             # header(request)}")
             abort(401)  # unauthorized
