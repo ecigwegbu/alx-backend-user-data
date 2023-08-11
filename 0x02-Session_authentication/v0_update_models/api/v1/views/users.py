@@ -42,7 +42,7 @@ def view_one_user(user_id: str = None) -> str:
     else:
         user = User.get(user_id)
         if user is None:
-            print(f"*************USER NONE in route****!!!!")
+            # print(f"*************USER NONE in route****!!!!")
             abort(404)
     return jsonify(user.to_json())
 
