@@ -27,7 +27,6 @@ class SessionDBAuth(SessionExpAuth):
                'created_at': datetime.now()
         }
         self.user_id_by_session_id[session_id] = session_dictionary
-        user.save()
         return session_id
 
     def user_id_for_session_id(self, session_id=None) -> str:
