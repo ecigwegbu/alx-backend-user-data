@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Setup data files"""
+from api.v1.auth.session_auth import SessionAuth
+from models.user import User
 
 
 class SessionExpAuth(SessionAuth):
