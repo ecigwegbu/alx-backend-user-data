@@ -5,6 +5,7 @@ from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models.user import User
 import os
+from typing import Any
 
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
@@ -58,3 +59,19 @@ def create_session_user() -> str:
     cookie_name = os.getenv("SESSION_NAME")
     resp.set_cookie(cookie_name, session_id)
     return resp, 200
+
+
+@app_views.route('/auth_session/logout', methods=['DELETE'],
+                 strict_slashes=False)
+def delete_session() -> Any:
+    """ DELETE /api/v1/auth_session/logout
+    Path parameter:
+      - None
+    Return:
+      - empty JSON is the session has been correctly deleted
+      - 404 if the Session ID doesn't exist
+    """
+    from api.v1.app import auth
+    if not auth.destroy_session(request):
+        abort(404)
+    return jsonify({}), 200
