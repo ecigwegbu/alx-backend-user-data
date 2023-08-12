@@ -65,8 +65,7 @@ def bf_request() -> Union[str, None]:
         #                                                 excluded_paths))
         if auth.authorization_header(request) is None \
                 and auth.session_cookie(request) is None:
-            # print(f"-->> >> B4 request. auth header is {auth.authorization
-            # header(request)}")
+            # print(f"\n-->> >> B4 request.\n")
             abort(401)  # unauthorized
         # print(f"HHHHH  HHHH Processing ... Requires Auth ....")
         # print(f"KKKK kkkk kKKKK  auth.current_user_email: {auth.current

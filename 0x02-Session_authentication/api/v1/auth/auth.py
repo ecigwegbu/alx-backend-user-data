@@ -48,4 +48,5 @@ class Auth():
         # print(f"\n ii  iii   ii  cookie_name: {cookie_name}")
         # print(f"\n--------- dict request: {request.__dict__}")
         cookie = request.cookies.get(cookie_name)
+        # print(f"\n\nxxxx xxxx cookie {cookie}")
         return cookie
