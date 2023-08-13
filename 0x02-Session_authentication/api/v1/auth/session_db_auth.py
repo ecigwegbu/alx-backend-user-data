@@ -21,7 +21,13 @@ class SessionDBAuth(SessionExpAuth):
         session_id = super().create_session(user_id)
         if not session_id:
             return None
-        user = UserSession({'user_id': user_id, 'session_id': session_id})
+        # print(f"AAA>  ---> user_id: {user_id}")
+        # print(f"AAA---> -> session_id: {session_id}")
+        id_data = {'user_id': user_id, 'session_id': session_id}
+        user = UserSession(**id_data)
+        # print(f"h h h user: {user.__dict__}\n")
+        # print(f"--->  ---> user.user_id: {user.user_id}")
+        # print(f"--->  ---> user.session_id: {user.session_id}")
         session_dictionary = {
                'user_id': user_id,
                'created_at': datetime.now()
