@@ -3,7 +3,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
-from typing import Union
 from user import Base, User
 
 
@@ -22,7 +21,7 @@ class DB:
         self.__session = None
 
     @property
-    def _session(self) -> Union[Session, None]:
+    def _session(self) -> Session:
         """Memoized session object. This property enables a session handle.
         """
         if self.__session is None:
