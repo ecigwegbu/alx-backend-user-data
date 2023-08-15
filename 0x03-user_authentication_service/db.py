@@ -4,6 +4,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
+from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.orm.exc import NoResultFound
 from user import Base, User
 
 
@@ -33,7 +35,7 @@ class DB:
     def add_user(self, email: str, hashed_password: str) -> User:
         """Save the user to a database. Rquires no validation for now.
         """
-        new_user = User(email="email", hashed_password="hashed_password")
+        new_user = User(email=email, hashed_password=hashed_password)
         if self._session is None:
             return None
         self._session.add(new_user)
@@ -41,3 +43,14 @@ class DB:
         self._session.refresh(new_user)
 
         return new_user
+
+    def find_user_by(self, **kwargs) -> User:
+        """Based on given kwargs and filter users to retrieve the first user
+        """
+        try:
+            user = self._session.query(User).filter_by(**kwargs).first()
+            if user is None:
+                raise NoResultFound
+        except Exception:
+            raise
+        return user
