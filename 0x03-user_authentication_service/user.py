@@ -8,7 +8,7 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
 
-class User(Base):  # type: ignore
+class User(Base):
     """Create a model User with given attributes
     """
     __tablename__ = 'users'
