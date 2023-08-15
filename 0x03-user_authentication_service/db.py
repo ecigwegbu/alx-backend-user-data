@@ -30,7 +30,7 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email: str, hashed_password: str) -> Union[User, None]:
+    def add_user(self, email: str, hashed_password: str) -> User:
         """Save the user to a database. Rquires no validation for now.
         """
         new_user = User(email="email", hashed_password="hashed_password")
