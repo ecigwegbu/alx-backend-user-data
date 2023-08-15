@@ -2,7 +2,7 @@
 """
 Basic Flask app that returns a BienVenue message
 """
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort
 from auth import Auth
 
 
@@ -36,6 +36,21 @@ def users():
     except ValueError:
         return jsonify({"message": "email already registered"}), 400
     pass
+
+
+@app.route("/sessions", methods=["POST"], strict_slashes=False)
+def login():
+    """Handle user login based on email and password. Create a
+    session cookie
+    """
+    email = request.form.get("email")
+    password = request.form.get("password")
+    if not AUTH.valid_login(email, password):
+        abort(401)
+    session_id = AUTH.create_session(email)
+    resp = jsonify({"email": email, "message": "logged in"})
+    resp.set_cookie("session_id", session_id)
+    return resp, 200
 
 
 if __name__ == "__main__":
