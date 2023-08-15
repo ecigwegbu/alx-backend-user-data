@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """DB module. This module enables access to the database of the app.
 """
 from sqlalchemy import create_engine
