@@ -1,4 +1,4 @@
-"""DB module
+"""DB module. This module enables access to the database of the app.
 """
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -8,11 +8,12 @@ from user import Base, User
 
 
 class DB:
-    """DB class
+    """DB class. This class implements the database handler methods.
+       Only its public methods should be accessed from outside.
     """
 
     def __init__(self) -> None:
-        """Initialize a new DB instance
+        """Initialize a new DB instance. Takes care of instance variables.
         """
         # self._engine = create_engine("sqlite:///a.db", echo=True)
         self._engine = create_engine("sqlite:///a.db")
@@ -22,7 +23,7 @@ class DB:
 
     @property
     def _session(self) -> Union[Session, None]:
-        """Memoized session object
+        """Memoized session object. This property enables a session handle.
         """
         if self.__session is None:
             DBSession = sessionmaker(bind=self._engine)
