@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
-"""Create an SQLAlchemy table user using ORM and mapping declaration
+"""Define an SQLAlchemy table class User using ORM and mapping declaration
 """
-from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
 
 
 Base = declarative_base()
 
 
-class User(Base):
+class User(Base):  # type: ignore
     """Create a model User with given attributes
     """
     __tablename__ = 'users'
