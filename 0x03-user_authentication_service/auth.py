@@ -59,3 +59,18 @@ class Auth:
                                   user.hashed_password)
         except Exception:
             return False
+
+    def create_session(self, email: str) -> str:
+        """Return a Session ID based on a given email address.
+        """
+        # find user
+        try:
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            return None
+        # generate UUID
+        session_id = _generate_uuid()
+        # Store UUID in database
+        self._db.update_user(user.id, session_id=session_id)
+        # Return Session ID
+        return session_id
