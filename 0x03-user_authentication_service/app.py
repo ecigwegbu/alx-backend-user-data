@@ -4,6 +4,7 @@ Basic Flask app that returns a BienVenue message
 """
 from flask import Flask, jsonify, request, abort, url_for, redirect
 from auth import Auth
+from sqlalchemy.orm.exc import NoResultFound
 
 
 AUTH = Auth()
@@ -101,10 +102,9 @@ def update_password():
     reset_token = request.form.get("reset_token")
     password = request.form.get("password")
     try:
-        # user = AUTH._db.find_user_by(email=email, reset_token=reset_token)
-        # user = AUTH._db.find_user_by(reset_token=reset_token)
+        user = AUTH._db.find_user_by(email=email, reset_token=reset_token)
         AUTH.update_password(reset_token, password)
-    except ValueError:  # NoResultFound:
+    except (NoResultFound, ValueError):
         abort(403)
     return jsonify({"email": email, "message": "Password updated"}), 200
 
