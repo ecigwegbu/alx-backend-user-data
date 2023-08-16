@@ -23,8 +23,8 @@ def root_route() -> str:
 
 
 @app.route("/users", methods=["POST"], strict_slashes=False)
-def users():
-    """Implements the /users POST route
+def users():  # ? email, password
+    """Register a new user based on email and password
     """
     email = request.form.get("email")
     password = request.form.get("password")
@@ -40,9 +40,10 @@ def users():
 
 
 @app.route("/sessions", methods=["POST"], strict_slashes=False)
-def login():
-    """POST: Handle user login based on email and password. Create a
-    session cookie
+def login():  # ? email, password
+    """Login a user based on email and password. Create a
+    session_id for the user, update the user in the database and
+    add the session_id as a cookie to the response
     """
     email = request.form.get("email")
     password = request.form.get("password")
@@ -55,8 +56,9 @@ def login():
 
 
 @app.route("/sessions", methods=["DELETE"], strict_slashes=False)
-def logout():
-    """DELETE: Destroy the session ID and redirect the user to GET /
+def logout():  # ? cookie: session_id
+    """Logout the user: destroy the session ID and redirect the user
+    to the welcome page - GET /
     """
     session_id = request.cookies.get("session_id")
     if session_id:
@@ -68,8 +70,8 @@ def logout():
 
 
 @app.route("/profile", methods=["GET"], strict_slashes=False)
-def profile():
-    """Get the user profile (email) based on a session_id
+def profile():  # ? cookie: session_id
+    """Get the user profile (email) based on a session_id cookie
     """
     session_id = request.cookies.get("session_id")
     if session_id:
@@ -80,7 +82,7 @@ def profile():
 
 
 @app.route("/reset_password", methods=["POST"], strict_slashes=False)
-def get_reset_password_token():
+def get_reset_password_token():  # ? email
     """Get a password reset token for a user based on the email
     """
     email = request.form.get("email")
@@ -94,16 +96,16 @@ def get_reset_password_token():
 
 
 @app.route("/reset_password", methods=["PUT"], strict_slashes=False)
-def update_password():
+def update_password():  # ? email, reset_token, new_password
     """Update a user's password after verifying that the reset_token matches
     with the email
     """
     email = request.form.get("email")
-    reset_token = request.cookies.get("reset_token")
-    password = request.form.get("password")
+    reset_token = request.form.get("reset_token")
+    new_password = request.form.get("new_password")
     try:
         user = AUTH._db.find_user_by(email=email, reset_token=reset_token)
-        AUTH.update_password(reset_token, password)
+        AUTH.update_password(reset_token, new_password)
     except (NoResultFound, ValueError):
         abort(403)
     return jsonify({"email": email, "message": "Password updated"}), 200
