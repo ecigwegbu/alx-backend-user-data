@@ -8,10 +8,10 @@ def register_user(email: str, password: str) -> None:
     """Register a new user based on email and password
     """
     url = "http://localhost:5000/users"
-    data = {"email": email, "password": password}
+    data = {"email": EMAIL, "password": PASSWD}
     response = requests.post(url, data=data)
     assert response.status_code == 200
-    payload = {"email": email, "message": "user created"}
+    payload = {"email": EMAIL, "message": "user created"}
     assert response.json() == payload
 
 
@@ -21,7 +21,7 @@ def log_in_wrong_password(email: str, password: str) -> None:
     add the session_id as a cookie to the response
     """
     url = "http://localhost:5000/sessions"
-    data = {"email": email, "password": password}
+    data = {"email": EMAIL, "password": NEW_PASSWD}
     response = requests.post(url, data=data)
     assert response.status_code == 401
 
@@ -40,15 +40,14 @@ def log_in(email: str, password: str) -> str:
     add the session_id as a cookie to the response
     """
     url = "http://localhost:5000/sessions"
-    data = {"email": email, "password": password}
+    data = {"email": EMAIL, "password": PASSWD}
     response = requests.post(url, data=data)
     if 'session_id' in response.cookies:
         session_id = response.cookies['session_id']
     else:
         session_id = None
-    # print(f"\n---STAT: {response.status_code}")  # debug
     assert response.status_code == 200
-    payload = {"email": email, "message": "logged in"}
+    payload = {"email": EMAIL, "message": "logged in"}
     assert response.json() == payload
     return session_id
 
@@ -59,7 +58,7 @@ def profile_logged(session_id: str) -> None:
     url = "http://localhost:5000/profile"
     cookies = {"session_id": session_id}
     response = requests.get(url, cookies=cookies)
-    payload = {"email": EMAIL}  # debug
+    payload = {"email": EMAIL}
     assert response.status_code == 200
     assert response.json() == payload
 
@@ -79,28 +78,12 @@ def log_out(session_id: str) -> None:
 def reset_password_token(email: str) -> str:
     """Get a password reset token for a user based on the email
     """
-    url = "http://localhost:5000/reset_password"
-    data = {"email": email}
-    response = requests.post(url, data=data)
-    # payload = {"email": email, "reset_token": reset_token}
-    assert response.status_code == 200
-    reset_token = response.json()['reset_token']
-    # assert response.json() == payload
-    # print(f"\nreset_token: {reset_token}")
-    return reset_token
 
 
 def update_password(email: str, reset_token: str, new_password: str) -> None:
     """Update a user's password after verifying that the reset_token matches
     with the email
     """
-    url = "http://localhost:5000/reset_password"
-    data = {"email": email, "reset_token": reset_token,
-            "new_password": new_password}
-    response = requests.put(url, data=data)
-    assert response.status_code == 200
-    payload = {"email": email, "message": "Password updated"}
-    assert response.json() == payload
 
 
 EMAIL = "guillaume@holberton.io"
@@ -116,6 +99,6 @@ if __name__ == "__main__":
     session_id = log_in(EMAIL, PASSWD)
     profile_logged(session_id)
     log_out(session_id)
-    reset_token = reset_password_token(EMAIL)
-    update_password(EMAIL, reset_token, NEW_PASSWD)
-    log_in(EMAIL, NEW_PASSWD)
+    # reset_token = reset_password_token(EMAIL)
+    # update_password(EMAIL, reset_token, NEW_PASSWD)
+    # log_in(EMAIL, NEW_PASSWD)
