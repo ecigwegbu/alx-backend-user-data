@@ -2,7 +2,7 @@
 """
 Basic Flask app that returns a BienVenue message
 """
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, url_for, redirect
 from auth import Auth
 
 
@@ -51,6 +51,19 @@ def login():
     resp = jsonify({"email": email, "message": "logged in"})
     resp.set_cookie("session_id", session_id)
     return resp, 200
+
+
+@app.route("/sessions", methods=["DELETE"], strict_slashes=False)
+def logout():
+    """Destroy the session ID and redirect the user to GET /
+    """
+    session_id = request.cookies.get("session_id")
+    if session_id:
+        user = AUTH._db.get_user_from_session_id(session_id)
+        if user:
+            AUTH._db.destroy_session(user.id)
+            return redirect(url_for("root_route"))
+    abort(403)
 
 
 if __name__ == "__main__":
